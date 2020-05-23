@@ -8,15 +8,14 @@
 
   <div class="field">
     <%= form.label :タスク内容 %><br>
-    <textarea name="content"><%= task.content %></textarea>
+    <%= form.text_field :content %>
   </div>
   
   <div class="field">
     <%= form.label :ステータス %><br>
-    <textarea name="content"><%= task.status %></textarea>
+    <%= form.select(:status, [["未着手"], ["進行中"], ["完了"], ["中止"], ["保留", ]]) %>
   </div>
   
-  <!-- 「日時の入力済み内容」を引き継ぎする書き方が不明。 -->
   <div class="field">
     <%= form.label :期日 %><br>
     <%= form.datetime_field :deadline_at %>
