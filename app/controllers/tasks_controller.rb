@@ -1,9 +1,18 @@
+
 class TasksController < ApplicationController
 
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @tasks = Task.all
+    # 検索オブジェクト
+    @search = Task.ransack(params[:q])
+    # 検索結果
+    @tasks = @search.result
+  end
+
+  def search_params
+    params.require(:q).permit(:task_id_eq)
   end
 
   def show
@@ -24,17 +33,15 @@ class TasksController < ApplicationController
     else
       render :new
     end
-    # 「respond_to」は、指定されたフォーマットに応じて異なるテンプレートを呼び出す仕組み。
   end
 
   def update
     respond_to do |format|
-      # 更新が成功した場合
+      # 更新が成功した場合（◆メッセージが表示されない）
       if @task.update(task_params)
         format.html { redirect_to @task, notice: "タスク更新をしました" }
         format.json { render :show, status: :ok, location: @task }
-
-      # 更新が失敗した場合
+      # 更新が失敗した場合（◆メッセージが表示されない）
       else
         format.html { render :edit }
         format.json { render json: @task.errors, status: :unprossable_entity }
