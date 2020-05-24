@@ -3,7 +3,6 @@ class Task < ApplicationRecord
 
   # バリデーション記述（タイトル）
   validates :title, presence: true
-  # FIXME: バリデーションエラーが出ないので一時的にコメントアウトしている
   # length: { in: 2..30 }
   # message: {"タイトルを2文字以上30字以内で入力してください！" }
 

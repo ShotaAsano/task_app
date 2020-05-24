@@ -1,6 +1,0 @@
-# 日時（time）のデフォルトの書式を%Y/%m/%d %H:%M:%Sにするための設定
-ja:
-  time:
-    formats:
-      default: "%Y/%m/%d %H:%M:%S"
-      short: "%Y年%m月%d日 %H:%M"
