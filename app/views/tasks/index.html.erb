@@ -29,7 +29,7 @@
         <td><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= task.status %></td>
-        <td><%= task.deadline_at %></td>
+        <td><%= l task.deadline_at, format: :short %></td>
         <td>
           <%= link_to "詳細", task %>
           <%= link_to "編集", edit_task_path(task) %>
@@ -39,3 +39,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= paginate @tasks %>

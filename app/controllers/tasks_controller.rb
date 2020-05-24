@@ -4,11 +4,11 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
-    # 検索オブジェクト
+    # 検索オブジェクト ＆ 検索結果
     @search = Task.ransack(params[:q])
-    # 検索結果
     @tasks = @search.result
+    # ページネーション機能
+    @tasks = Task.page(params[:page])
   end
 
   def search_params
