@@ -1,9 +1,16 @@
+
 class TasksController < ApplicationController
 
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    # 検索オブジェクト ＆ 検索結果
+    @search = Task.ransack(params[:q])
+    @tasks = @search.result.page(params[:page])
+  end
+
+  def search_params
+    params.require(:q).permit(:task_id_eq)
   end
 
   def show
@@ -20,22 +27,22 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     
     if @task.save
-      redirect_to @task, notice: 'task created'
+      flash[:notice] = "タスクを追加しました。"
+      redirect_to @task
     else
+      flash.now[:danger] = "登録に失敗しました。"
       render :new
     end
-    # 「respond_to」は、指定されたフォーマットに応じて異なるテンプレートを呼び出す仕組み。
   end
 
   def update
     respond_to do |format|
-      # 更新が成功した場合
       if @task.update(task_params)
+        flash[:notice] = "タスクを修正しました。"
         format.html { redirect_to @task, notice: "タスク更新をしました" }
         format.json { render :show, status: :ok, location: @task }
-
-      # 更新が失敗した場合
       else
+        flash.now[:danger] = "更新に失敗しました。"
         format.html { render :edit }
         format.json { render json: @task.errors, status: :unprossable_entity }
       end
@@ -45,7 +52,8 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: "削除しました" }
+      flash[:success] = "タスクを削除しました。"
+      format.html { redirect_to tasks_url }
       format.json { head :no_content }
     end
   end

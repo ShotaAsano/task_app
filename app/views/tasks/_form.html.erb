@@ -3,20 +3,21 @@
   <div class="field">
     <%= form.label :タイトル %><br>
     <%= form.text_field :title %>
-    <!-- タイトル入力のバリーデーション自体は機能しているが、エラーメッセージが表示されない。 -->
+    <% if @task.errors.any? %>
+      <%= @task.errors.messages[title][0] %>
+    <% end %>
   </div>
 
   <div class="field">
     <%= form.label :タスク内容 %><br>
-    <textarea name="content"><%= task.content %></textarea>
+    <%= form.text_field :content %>
   </div>
   
   <div class="field">
     <%= form.label :ステータス %><br>
-    <textarea name="content"><%= task.status %></textarea>
+    <%= form.select :status, Task.status.options %>
   </div>
   
-  <!-- 「日時の入力済み内容」を引き継ぎする書き方が不明。 -->
   <div class="field">
     <%= form.label :期日 %><br>
     <%= form.datetime_field :deadline_at %>
