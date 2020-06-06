@@ -5,10 +5,11 @@
 </p>
 
 <%= search_form_for @search do |f| %>
-  <%= f.label :title_cont, "タイトル検索" %>
+  <%= f.label :title, "タイトル検索" %>
   <%= f.search_field :title_cont %><br>
-  <%= f.label :task_id_eq, "ステータス検索" %>
-  <%= f.collection_select(:status, @tasks, :id, :status, :include_blank => "指定なし") %>
+  <%= f.label :status, "ステータス検索" %> 
+  <%# <%= f.collection_select(:status, @tasks, :id, :status, :include_blank => "指定なし") %>
+  <%= f.select(:status, @tasks.status.options, :include_blank => "指定なし") %>
   <div class="actions"><%= f.submit "検索" %></div>
 <% end %>
 
@@ -29,7 +30,7 @@
         <td><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= task.status %></td>
-        <td><%= l task.deadline_at, format: :short %></td>
+        <td><%= l task.deadline_at %></td>
         <td>
           <%= link_to "詳細", task %>
           <%= link_to "編集", edit_task_path(task) %>

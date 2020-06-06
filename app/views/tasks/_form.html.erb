@@ -3,7 +3,9 @@
   <div class="field">
     <%= form.label :タイトル %><br>
     <%= form.text_field :title %>
-    <!-- タイトル入力のバリーデーション自体は機能しているが、エラーメッセージが表示されない。 -->
+    <% if @task.errors.any? %>
+      <%= @task.errors.messages[title][0] %>
+    <% end %>
   </div>
 
   <div class="field">
@@ -13,7 +15,7 @@
   
   <div class="field">
     <%= form.label :ステータス %><br>
-    <%= form.select(:status, [["未着手"], ["進行中"], ["完了"], ["中止"], ["保留", ]]) %>
+    <%= form.select :status, Task.status.options %>
   </div>
   
   <div class="field">

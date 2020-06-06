@@ -6,9 +6,7 @@ class TasksController < ApplicationController
   def index
     # 検索オブジェクト ＆ 検索結果
     @search = Task.ransack(params[:q])
-    @tasks = @search.result
-    # ページネーション機能
-    @tasks = Task.page(params[:page])
+    @tasks = @search.result.page(params[:page])
   end
 
   def search_params
@@ -27,10 +25,11 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    
     if @task.save
-      redirect_to @task, notice: 'task created'
+      flash[:notice] = "タスクを追加しました。"
+      redirect_to @task
     else
+      flash.now[:danger] = "登録に失敗しました。"
       render :new
     end
   end
@@ -39,10 +38,12 @@ class TasksController < ApplicationController
     respond_to do |format|
       # 更新が成功した場合（◆メッセージが表示されない）
       if @task.update(task_params)
+        flash[:notice] = "タスクを修正しました。"
         format.html { redirect_to @task, notice: "タスク更新をしました" }
         format.json { render :show, status: :ok, location: @task }
       # 更新が失敗した場合（◆メッセージが表示されない）
       else
+        flash.now[:danger] = "更新に失敗しました。"
         format.html { render :edit }
         format.json { render json: @task.errors, status: :unprossable_entity }
       end
@@ -52,7 +53,8 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: "削除しました" }
+      flash[:success] = "タスクを削除しました。"
+      format.html { redirect_to tasks_url }
       format.json { head :no_content }
     end
   end

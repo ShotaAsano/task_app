@@ -1,20 +1,21 @@
 class Task < ApplicationRecord
-  # バリーデーションは機能しているが、エラー表示が出ない。「message: "文字列"」で表示できるのでは？
+
+  extend Enumerize
+  enumerize :status, in: { doing: 0, waiting: 1, pending: 2, done: 3, canceled: 4 }
+
+  # バリーデーションは機能しているが、エラー表示が出ない。
 
   # バリデーション記述（タイトル）
-  validates :title, presence: true
+  validates :title, 
+  presence: { message: 'タイトルを入力してください' }, 
+  length: { in: 2..20, message: '2〜20文字以内でタイトルを入力してください' }
   
-  # FIXME: バリデーションエラーが出ないので一時的にコメントアウトしている
-
-  # length: { in: 2..30 }
-  # message: {"タイトルを2文字以上30字以内で入力してください！" }
-
   # バリデーション記述（タスク内容）
-  # validates :content, presence: true,
-  # length: { minimum: 5, maximum: 100, message: "タスク内容を5文字以上100字以内で入力してください！"}
+  validates :content, presence: true
 
-  # # バリデーション記述（ステータス）
-  # validates :status, presence: true,
-  # length: { minimum: 2, maximum: 8, message: "タイトルを2文字以上8字以内で入力してください！"}
+  # バリデーション記述（ステータス）
+  validates :status, presence: true
 
+  # バリデーション記述（期日）
+  validates :deadline_at, presence: true
 end

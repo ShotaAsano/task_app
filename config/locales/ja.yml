@@ -1,5 +1,13 @@
 ja:
   time:
     formats:
-      default: "%Y/%m/%d %H:%M:%S"
-      short: "%Y年%m月%d日 %H:%M"
+      default: "%Y年%m月%d日 %H:%M"
+
+  enumerize:
+    task:
+      status:
+        doing: 進行中
+        waiting: 着手前
+        pending: 保留
+        done: 完了
+        canceled: キャンセル
