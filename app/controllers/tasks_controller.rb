@@ -25,6 +25,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    
     if @task.save
       flash[:notice] = "タスクを追加しました。"
       redirect_to @task
@@ -36,12 +37,10 @@ class TasksController < ApplicationController
 
   def update
     respond_to do |format|
-      # 更新が成功した場合（◆メッセージが表示されない）
       if @task.update(task_params)
         flash[:notice] = "タスクを修正しました。"
         format.html { redirect_to @task, notice: "タスク更新をしました" }
         format.json { render :show, status: :ok, location: @task }
-      # 更新が失敗した場合（◆メッセージが表示されない）
       else
         flash.now[:danger] = "更新に失敗しました。"
         format.html { render :edit }

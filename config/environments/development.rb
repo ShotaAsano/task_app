@@ -60,6 +60,6 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.action_mailer.default_url_options = { protocol: 'https', host: 'トップページアドレス' }
-  
+config.action_mailer.default_url_options = { protocol: 'https', host: 'トップページアドレス' }
+
 end

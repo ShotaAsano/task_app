@@ -2,7 +2,6 @@ ja:
   time:
     formats:
       default: "%Y年%m月%d日 %H:%M"
-
   enumerize:
     task:
       status:
@@ -10,4 +9,4 @@ ja:
         waiting: 着手前
         pending: 保留
         done: 完了
-        canceled: キャンセル
+        canceled: キャンセル 
